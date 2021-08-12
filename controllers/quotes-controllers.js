@@ -3,7 +3,7 @@ const { Quote, User } = require('../models');
 const quoteController = {
     // GET to get all thoughts
     getAllQuotes(req, res) {
-        User.find({})
+        Quote.find({})
             .then(dbQuote => {
                 res.json(dbQuote);
             })
