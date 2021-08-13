@@ -53,6 +53,26 @@ const quoteController = {
         )
             .then(dbQuoteData => res.json(dbQuoteData))
             .catch(err => res.json(err));
+    },
+//   POST to create a reaction stored in a single thought's reactions array field
+    addReaction({ params}, res) {
+        Quote.create(
+            { _id: params.quoteId },
+            {$push: {
+                reactions: params.reactionId
+            }
+        }, {new:true})
+        .then(dbQuoteData => res.json(dbQuoteData))
+            .catch(err => res.json(err));
+    },
+// DELETE to pull and remove a reaction by the reaction's reactionId value
+    removeReaction({ params }, res) {
+        Quote.findOneAndDelete(
+            {_id: params.reactionId },
+            {$pull: { reactions: { reactionId: params.reactionId } } }
+        )
+        .then(dbQuoteData => res.json(dbQuoteData))
+        .catch(err => res.json(err));
     }
 };
 
