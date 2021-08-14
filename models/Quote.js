@@ -29,6 +29,7 @@ const ReactionSchema = new Schema(
 );
 
 const QuoteSchema = new Schema({
+    
     quoteText: {
         type: String,
         required: true,

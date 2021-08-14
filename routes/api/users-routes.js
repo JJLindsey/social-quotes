@@ -12,10 +12,10 @@ router
     .route('/')
     .get(getAllUsers)
     .post(createUser);
-    
-// router
-//     .route('/:userId/friends/:friendId')
-//     .post(addFriend);
+
+router
+    .route('/:userId/friends/:friendId')
+    .post(addFriend);
 
 router
     .route('/:id')

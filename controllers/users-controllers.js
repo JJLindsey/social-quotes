@@ -56,6 +56,15 @@ const userController = {
         .then(dbUserData => res.json(dbUserData))
         .catch(err => res.json(err));
     },
+    // createFriend({ body }, res) {
+    //     User.create(body)
+    //     .populate({
+    //         path: 'friends',
+    //     })
+    //         .then(dbUserData => res.json(dbUserData))
+    //         .catch(err => res.json(err));
+    // },
+
     addFriend({params, body }, res) {
         User.findOneAndUpdate({ _id: params.userId}, body, {
             $push: {
