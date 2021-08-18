@@ -57,7 +57,7 @@ const userController = {
         .catch(err => res.json(err));
     },
     addFriend({params, body }, res) {
-        User.findOneAndUpdate({ _id: params.userId}, body, {
+        User.findOneAndUpdate({ _id: params.userId}, {
             $push: {
                 friends: params.friendId
             }

@@ -4,9 +4,7 @@ const {
     getQuoteById,
     addQuote,
     updateQuote,
-    removeQuote,
-    addReaction,
-    removeReaction
+    removeQuote
 } = require('../../controllers/quotes-controllers');
 
 router
@@ -18,9 +16,7 @@ router
     .route('/:id')
     .get(getQuoteById)
     .put(updateQuote)
-    .delete(removeQuote)
-    .post(addReaction)
-    .delete(removeReaction)
+    .delete(removeQuote);
 
 
 module.exports = router;
