@@ -22,17 +22,15 @@ const quoteController = {
             });
     },
     // POST to create a new thought (don't forget to push the created thought's _id to the associated user's thoughts array field)
-    addQuote({ body }, res) {
+    addQuote({ params, body }, res) {
         console.log(body);
         Quote.create(body)
-            .then(dbQuote => {
-                User.findOneAndUpdate(
-                    { _id: body.userId },
-                    { $push: { quotes: dbQuote._id } },
+            .then(({ _id }) => {
+                return Quote.findOneAndUpdate(
+                    { _id: params.quoteId },
+                    { $push: { 'Quotes': _id } },
                     { new: true }
-                ).then(dbUserQuote => {
-                    res.json(dbUserQuote);
-                })
+                );
             })
             .catch(err => res.json(err));
     },
