@@ -1,4 +1,5 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
+const dateFormat = require('../utils/dateFormat');
 
 const ReactionSchema = new Schema(
     {
@@ -24,7 +25,8 @@ const ReactionSchema = new Schema(
     {
         toJSON: {
             getters: true
-        }
+        },
+        id: false
     }
 );
 
@@ -52,11 +54,12 @@ const QuoteSchema = new Schema({
             virtuals: true,
             getters: true
         },
+        id: false
     }
 );
 
 QuoteSchema.virtual('reactionCount').get(function () {
-    return reactions.length;
+    return this.reactions.length;
 });
 
 const Quote = model('Quote', QuoteSchema);

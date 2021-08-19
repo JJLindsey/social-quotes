@@ -3,12 +3,13 @@ const { Quote, User } = require('../models');
 const quoteController = {
     // GET to get all thoughts
     getAllQuotes(req, res) {
-        Quote.find({})
-            .then(dbQuote => {
-                res.json(dbQuote);
+        Quote.find()
+            .then(quoteData => {
+                res.json(quoteData);
             })
             .catch(err => {
-                res.json(err);
+                console.log(err)
+                res.status(400).json(err);
             });
     },
     // GET to get a single thought by its _id
@@ -23,17 +24,32 @@ const quoteController = {
     },
     // POST to create a new thought (don't forget to push the created thought's _id to the associated user's thoughts array field)
     addQuote({ params, body }, res) {
-        console.log(body);
+        // console.log(body);
         Quote.create(body)
-            .then(({ _id }) => {
-                return Quote.findOneAndUpdate(
-                    { _id: params.quoteId },
-                    { $push: { 'Quotes': _id } },
-                    { new: true }
-                );
-            })
-            .catch(err => res.json(err));
+            .then(({_id}) => {
+                return User.findByIdAndUpdate(
+                    params.userId,
+                    {$push: {quotes: _id}},
+                    {new: true, runValidators:true}
+                    )
+                })
+                .then(quoteData => {
+                    if(!quoteData) {
+                        res.status(404).json({ message: 'No User found with this id!' });
+                        return;
+                    }
+                    res.json(quoteData);
+                // console.log(newQuote)
+                // res.json({newQuote})
+                // return Quote.findOneAndUpdate(
+                //     { _id: params.quoteId },
+                //     { $push: { 'Quotes': _id } },
+                //     { new: true }
+                // );
+                })
+                .catch(err => res.json(err));
     },
+
     // PUT to update a thought by its _id
     updateQuote({ params, body }, res) {
         Quote.findOneAndUpdate({ _id: params.id }, body, { new: true })
@@ -53,7 +69,27 @@ const quoteController = {
         )
             .then(dbQuoteData => res.json(dbQuoteData))
             .catch(err => res.json(err));
-    }
-};
+    },
+    //ADD reaction
+    addReaction({params, body}, res) {
+        Quote.findByIdAndUpdate(
+            params.quoteId,
+            {$push: {reactions: body}},
+            {new: true, runValidators: true}
+        )
+        .then(quoteData => {
+            if(!quoteData) {
+                res.status(404).json({ message: 'No quote with this id!' });
+                return;
+            }
+
+            res.json(quoteData);
+        })
+        .catch(err => {
+            console.log(err)
+            res.json(err)
+        });
+    },
+}
 
 module.exports = quoteController;

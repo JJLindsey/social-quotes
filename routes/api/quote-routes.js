@@ -10,8 +10,13 @@ const {
 router
     .route('/')
     .get(getAllQuotes)
+    //.post(addQuote);
+
+// /quotes/:userId
+router
+    .route('/:userId')
     .post(addQuote);
-    
+
 router
     .route('/:id')
     .get(getQuoteById)
@@ -20,3 +25,19 @@ router
 
 
 module.exports = router;
+
+// /api/thoughts/:id
+// router.route('/:id')
+// .get(getSingleThought)
+// .put(updateThought)
+
+
+
+// // /api/thoughts/:thoughtId/users/:userId
+// router.route('/:thoughtId/users/:userId')
+// .delete(deleteThought)
+
+// // /api/thoughts/:thoughtId/reactions
+// router.route('/:thoughtId/reactions')
+// .put(addReaction)
+// .delete(deleteReaction)
