@@ -4,13 +4,13 @@ const {
     getQuoteById,
     addQuote,
     updateQuote,
-    removeQuote
+    removeQuote,
+    addReaction
 } = require('../../controllers/quotes-controllers');
 
 router
     .route('/')
     .get(getAllQuotes)
-    //.post(addQuote);
 
 // /quotes/:userId
 router
@@ -23,21 +23,16 @@ router
     .put(updateQuote)
     .delete(removeQuote);
 
+router
+//thoughts/quoteId/..
+    .route('/:quoteId/reactions')
+    .put(addReaction);
+    // .delete(deleteReaction)
 
 module.exports = router;
-
-// /api/thoughts/:id
-// router.route('/:id')
-// .get(getSingleThought)
-// .put(updateThought)
-
 
 
 // // /api/thoughts/:thoughtId/users/:userId
 // router.route('/:thoughtId/users/:userId')
 // .delete(deleteThought)
 
-// // /api/thoughts/:thoughtId/reactions
-// router.route('/:thoughtId/reactions')
-// .put(addReaction)
-// .delete(deleteReaction)
