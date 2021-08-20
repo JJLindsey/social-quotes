@@ -62,13 +62,34 @@ const quoteController = {
     },
     // DELETE to remove a thought by its _id
     removeQuote({ params }, res) {
-        Quote.findOneAndUpdate(
-            { _id: params.quoteId },
-            { $pull: { quote: { quoteId: params.quoteId } } },
-            { new: true }
-        )
-            .then(dbQuoteData => res.json(dbQuoteData))
-            .catch(err => res.json(err));
+        Quote.findByIdAndDelete(params.id)
+            .then(dbQuote => {
+                if (!dbQuote) {
+                    res.status(404).json({
+                        message: 'No Thought id found!'
+                    })
+                    return;
+                }
+                return User.findByIdAndUpdate(
+                    params.userId, {
+                        $pull: {
+                            quotes: params.quoteId
+                        }
+                    }, {
+                        new: true
+                    }
+                )
+            })
+            .then(dbUserData => {
+                if (!dbUserData) {
+                    res.status(404).json({
+                        message: 'No user found with this ID'
+                    })
+                    return;
+                }
+                res.json(dbUserData)
+            })
+            .catch(err => res.json(err))
     },
     //ADD reaction
     addReaction({params, body}, res) {

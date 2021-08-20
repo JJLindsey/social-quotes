@@ -20,7 +20,10 @@ router
 router
     .route('/:id')
     .get(getQuoteById)
-    .put(updateQuote)
+    .put(updateQuote);
+
+router
+    .route('/:userId/:id')
     .delete(removeQuote);
 
 router
