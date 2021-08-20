@@ -28,7 +28,7 @@ This is a Backend application
 
 [Demo for Application](https://drive.google.com/file/d/1NhqTmLhw8-cRqXfXqyF-S9gUdso-AbrT/view?usp=sharing)
 
-
+<img src="SocQuotesScreen.png" alt="screenshot" height="400">
 
 
 ### **Technologies Used:**
