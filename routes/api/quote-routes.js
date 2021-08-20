@@ -24,15 +24,11 @@ router
     .delete(removeQuote);
 
 router
-//thoughts/quoteId/..
+//quotes/quoteId/..
     .route('/:quoteId/reactions')
     .put(addReaction);
     // .delete(deleteReaction)
 
 module.exports = router;
 
-
-// // /api/thoughts/:thoughtId/users/:userId
-// router.route('/:thoughtId/users/:userId')
-// .delete(deleteThought)
 
